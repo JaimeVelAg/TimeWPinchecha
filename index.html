@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo de Card con Bootstrap</title>
+    <!-- CDN de Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .card-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        body {
+            background-color: #000; /* Color crema */
+        }
+        .heart {
+            position: absolute;
+            color: red;
+            font-size: 24px;
+            animation: pop 1s forwards;
+        }
+        @keyframes pop {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="card-container">
+    <div class="card border-white" style="width: 19rem;">
+        <img src="JJ.jpeg" class="card-img-top" alt="Imagen de ejemplo">
+        <div class="card-body">
+            <h5 class="card-title text-center">Juntos con mi amada esposa el amor de mi vida❤️</h5>
+            <div class="card-text contador text-center" id="contador"></div>
+        </div>
+    </div>
+</div>
+<div id="hearts-container"></div>
+
+
+<!-- CDN de Bootstrap JS y dependencias (opcional) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    const fechaInicio = new Date('2024-04-12T00:00:00'); // Cambia esta fecha a la que desees
+
+    function actualizarContador() {
+        const ahora = new Date();
+        const diferencia = ahora - fechaInicio;
+
+        const segundos = Math.floor((diferencia / 1000) % 60);
+        const minutos = Math.floor((diferencia / 1000 / 60) % 60);
+        const horas = Math.floor((diferencia / (1000 * 60 * 60)) % 24);
+        const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24)) % 30; // Días del mes actual
+        const meses = Math.floor(diferencia / (1000 * 60 * 60 * 24 * 30)); // Aproximación a meses
+
+        document.getElementById('contador').textContent =
+            `${meses} meses, ${dias} días, ${horas} horas, ${minutos} minutos y ${segundos} segundos`;
+    }
+
+    setInterval(actualizarContador, 1000);
+    actualizarContador(); // Llama una vez para inicializar
+
+    function createHeart() {
+            const heart = document.createElement('span');
+            heart.className = 'heart';
+            heart.innerHTML = '❤️'; // Corazón
+            heart.style.left = Math.random() * 100 + 'vw'; // Posición horizontal aleatoria
+            heart.style.bottom = '0'; // Comienza desde la parte inferior
+
+            document.body.appendChild(heart);
+
+            // Eliminar el corazón después de la animación
+            setTimeout(() => {
+                heart.remove();
+            }, 1000); // Duración de la animación
+        }
+
+        // Crear varios corazones al recargar la página
+        for (let i = 0; i < 18; i++) {
+            createHeart();
+        }
+</script>
+</body>
+</html>
